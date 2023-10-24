@@ -19,13 +19,13 @@ public class TestClass {
         var cart = new Cart();
         cart.add("apple");
         assertFalse(cart.isEmpty());
+        assertTrue(cart.contains("apple"));
     }
 
     @Test
-    void test3() {
-        var cart = new Cart();
-        cart.add("apple");
-        assertTrue(cart.listItems().contains("apple"));
+    void test3(){
+        var cartManager = new CartManager();
+        assertEquals("id",cartManager.createCart().getId());
     }
 
     private class Cart {
@@ -39,8 +39,20 @@ public class TestClass {
             items.add(item);
         }
 
-        public List<String> listItems() {
-            return items;
+        public boolean contains(String item) {
+            return items.contains(item);
+        }
+
+        public String getId() {
+            return "id";
+        }
+    }
+
+    private class CartManager {
+
+
+        public Cart createCart() {
+            return new Cart();
         }
     }
 }
