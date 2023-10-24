@@ -1,17 +1,26 @@
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+import java.lang.reflect.Array;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 public class TestClass {
 
     @Test
-    void test1() {
-        var cart = new Cart("1");
+    void test3() {
+        var cartManager = new CartManager();
+        Cart cart = cartManager.createCart();
         assertTrue(cart.isEmpty());
+        assertFalse(cart.getId().isEmpty());
+    }
+
+    @Test
+    void test4() {
+        var cartManager = new CartManager();
+        String id1 = cartManager.createCart().getId();
+        String id2 = cartManager.createCart().getId();
+        assertNotEquals(id1, id2);
     }
 
     @Test
@@ -23,19 +32,19 @@ public class TestClass {
     }
 
     @Test
-    void test3() {
+    void test5() {
         var cartManager = new CartManager();
-        assertFalse(cartManager.createCart().getId().isEmpty());
+        String id = cartManager.createCart().getId();
+        assertTrue(cartManager.listItems(id).isEmpty());
     }
 
     @Test
-    void test4() {
+    void test6() {
         var cartManager = new CartManager();
-
-        String id1 = cartManager.createCart().getId();
-        String id2 = cartManager.createCart().getId();
-
-        assertNotEquals(id1, id2);
+        String id = cartManager.createCart().getId();
+        cartManager.addToCart(id, "apple");
+        cartManager.addToCart(id, "orange");
+        assertEquals(2, cartManager.listItems(id).size());
     }
 
     private class Cart {
@@ -61,12 +70,28 @@ public class TestClass {
         public String getId() {
             return id;
         }
+
+        public List<String> getItems(){
+            return Collections.unmodifiableList(this.items);
+        }
     }
 
     private class CartManager {
 
+        private List<Cart> carts = new ArrayList<>();
+
         public Cart createCart() {
-            return new Cart(UUID.randomUUID().toString());
+            var cart = new Cart(UUID.randomUUID().toString());
+            carts.add(cart);
+            return cart;
+        }
+
+        public List<String> listItems(String id) {
+            return this.carts.stream().filter(cart -> cart.getId().equals(id)).findFirst().get().getItems();
+        }
+
+        public void addToCart(String id, String item) {
+            this.carts.stream().filter(cart -> cart.getId().equals(id)).findFirst().get().add(item);
         }
     }
 }
