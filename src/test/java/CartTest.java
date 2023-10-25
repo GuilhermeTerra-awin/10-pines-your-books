@@ -1,3 +1,5 @@
+import java.time.LocalDate;
+import java.time.MonthDay;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -97,6 +99,64 @@ public class CartTest {
         assertEquals(3,cart.numberOf(otherProductSellBySupermarket()));
     }
 
+    @Test
+    public void testCartShouldNotCheckoutWhenEmpty(){
+        Cashier cashier = new Cashier();
+        var date = "10/9999";
+        var e = assertThrows(RuntimeException.class , () -> cashier.checkout(createCartWithCatalogWithProducts(), date));
+        assertEquals("Cart is empty", e.getMessage());
+    }
+
+    @Test
+    public void testCartShouldCheckoutWhenCartHasOneProduct(){
+        Cashier cashier = new Cashier();
+        var cart = createCartWithCatalogWithProducts();
+        cart.add(productSellBySupermarket());
+        var date = "10/9999";
+
+        assertEquals("transactionId", cashier.checkout(cart, date));
+    }
+
+    @Test
+    public void testCartShouldCheckoutWhenCartHasMultipleProduct(){
+        Cashier cashier = new Cashier();
+        var cart = createCartWithCatalogWithProducts();
+        var date = "10/9999";
+        cart.add(productSellBySupermarket());
+        cart.add(otherProductSellBySupermarket());
+
+        assertEquals("transactionId", cashier.checkout(cart, date));
+    }
+
+    @Test
+    public void test5() {
+        Cashier cashier = new Cashier();
+        var cart = createCartWithCatalogWithProducts();
+        // I want current month and year of today
+        var date = "09/2023";
+        cart.add(productSellBySupermarket());
+
+        var e = assertThrows(RuntimeException.class , () -> cashier.checkout(cart, date));
+        assertEquals("Card is expired", e.getMessage());
+
+    }
+
+    @Test
+    public void test6() {
+        Cashier cashier = new Cashier();
+        var cart = createCartWithCatalogWithProducts();
+        // I want current month and year of today
+        var date = "09/2023";
+
+        cart.add(productSellBySupermarket());
+
+        var e = assertThrows(RuntimeException.class , () -> cashier.checkout(cart, date));
+        assertEquals("Card is expired", e.getMessage());
+
+    }
+
+
+
     public Cart createCartWithCatalogWithProducts() {
         return new Cart(catalogWithProducts());
     }
@@ -122,5 +182,7 @@ public class CartTest {
         return "productSellBySupermarket";
     }
 
-
+    private Card validCard(){
+        returns new Card("1234567890123456","name", MonthDay.of(9, 2023));
+    }
 }
