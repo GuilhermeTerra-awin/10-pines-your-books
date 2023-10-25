@@ -1,20 +1,34 @@
 import java.time.LocalDate;
+import java.time.YearMonth;
 
 
 public class Cashier {
 
-    public String checkout(Cart cartWithCatalogWithProducts, String date) {
+    private final IMerchantProcessor merchantProcessor;
 
-        if (cartWithCatalogWithProducts.isEmpty()) {
-            throw new RuntimeException("Cart is empty");
-        }
+    public Cashier(IMerchantProcessor merchantProcessor){
+        this.merchantProcessor = merchantProcessor;
+    }
+    
+    public String checkout(Cart cart, Card card) {
 
-        String[] my = date.split("/");
-        LocalDate expirationDate = LocalDate.of(Integer.parseInt(my[1]),Integer.parseInt(my[0]),LocalDate.now().getDayOfMonth());
+        asserCartIsNotEmpty(cart.isEmpty(), "Cart is empty");
+        assertCardIsNotExpired(card);
 
-        if (expirationDate.isBefore(LocalDate.now())) {
+ return        merchantProcessor.processPayment(cart.getTotal(), card);
+
+    }
+
+    private void assertCardIsNotExpired(Card card) {
+        if(card.isExpired(YearMonth.now()))
+        {
             throw new RuntimeException("Card is expired");
         }
-        return "transactionId";
+    }
+
+    private void asserCartIsNotEmpty(boolean cartWithCatalogWithProducts, String Cart_is_empty) {
+        if (cartWithCatalogWithProducts) {
+            throw new RuntimeException(Cart_is_empty);
+        }
     }
 }

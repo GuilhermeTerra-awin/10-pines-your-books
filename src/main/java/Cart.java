@@ -1,15 +1,16 @@
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class Cart {
 
     public static final String PRODUCT_IS_NOT_SELL_BY_SUPERMARKET = "Product is not sell by supermarket";
     public static final String PRODUCT_QUANTITY_MUST_BE_STRICTLY_POSITIVE = "Product quantity must be strictly positive";
 
-    private List<Object> catalog;
+    private Map<Object, Double> catalog;
     private List<Object> products = new ArrayList<Object>();
 
-    public Cart(List<Object> catalog){
+    public Cart(Map<Object, Double> catalog){
         this.catalog = catalog;
     }
 
@@ -33,10 +34,15 @@ public class Cart {
             products.add(aProduct);
     }
 
+    public Double getTotal(){
+        return products.stream().map(p -> catalog.get(p)).reduce(0.0, Double::sum);
+    }
+
     public long numberOf(Object aProduct) {
         return products.stream().
                 filter(addedProduct -> addedProduct.equals(aProduct)).
                 count();
+
 
 // Para Java pre 1.8
 //    long count = 0;
@@ -48,7 +54,7 @@ public class Cart {
     }
 
     public void assertProductIsSellBySupermarket(Object aProduct) {
-        if(!catalog.contains(aProduct)) throw new RuntimeException(PRODUCT_IS_NOT_SELL_BY_SUPERMARKET);
+        if(!catalog.keySet().contains(aProduct)) throw new RuntimeException(PRODUCT_IS_NOT_SELL_BY_SUPERMARKET);
     }
 
     public void assertQuantityIsStrictlyPositive(int aQuantity) {
