@@ -15,15 +15,12 @@ public class CheckoutTest {
 
     @Test
     public void testCartShouldNotCheckoutWhenEmpty(){
-
-        var date = "10/9999";
         var e = assertThrows(RuntimeException.class , () -> cashier.checkout(TestDataFactory.createCartWithCatalogWithProducts(), TestDataFactory.createValidCard() ));
         assertEquals("Cart is empty", e.getMessage());
     }
 
     @Test
     public void testCartShouldCheckoutWhenCartHasOneProduct(){
-
         var cart = TestDataFactory.createCartWithCatalogWithProducts();
         cart.add(TestDataFactory.productSellBySupermarket());
 
@@ -32,9 +29,7 @@ public class CheckoutTest {
 
     @Test
     public void testCartShouldCheckoutWhenCartHasMultipleProduct(){
-
         var cart = TestDataFactory.createCartWithCatalogWithProducts();
-        var date = "10/9999";
         cart.add(TestDataFactory.productSellBySupermarket());
         cart.add(TestDataFactory.otherProductSellBySupermarket());
 
@@ -44,8 +39,6 @@ public class CheckoutTest {
     @Test
     public void test5() {
         var cart = TestDataFactory.createCartWithCatalogWithProducts();
-        // I want current month and year of today
-        var date = "09/2023";
         cart.add(TestDataFactory.productSellBySupermarket());
 
         var e = assertThrows(RuntimeException.class , () -> cashier.checkout(cart, TestDataFactory.createExpiredCard() ));
@@ -56,9 +49,6 @@ public class CheckoutTest {
     @Test
     public void test6() {
         var cart = TestDataFactory.createCartWithCatalogWithProducts();
-        // I want current month and year of today
-        var date = "09/2023";
-
         cart.add(TestDataFactory.productSellBySupermarket());
 
         var e = assertThrows(RuntimeException.class , () -> cashier.checkout(cart, TestDataFactory.createExpiredCard() ));
@@ -68,10 +58,7 @@ public class CheckoutTest {
 
     @Test
     public void test7() {
-
         var cart = TestDataFactory.createCartWithCatalogWithProducts();
-        // I want current month and year of today
-        var date = "11/2023";
         cart.add(TestDataFactory.productSellBySupermarket());
 
         var e = assertThrows(RuntimeException.class , () -> cashier.checkout(cart, TestDataFactory.createStolenCard()));
@@ -82,8 +69,6 @@ public class CheckoutTest {
     public void test8() {
 
         var cart = TestDataFactory.createCartWithCatalogWithProducts();
-        // I want current month and year of today
-        var date = "11/2023";
         cart.add(TestDataFactory.otherProductSellBySupermarket());
         cart.add(TestDataFactory.otherProductSellBySupermarket());
 
