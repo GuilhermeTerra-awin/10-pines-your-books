@@ -1,7 +1,11 @@
+package own;
+
 import org.junit.jupiter.api.Test;
 
-import java.lang.reflect.Array;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -71,14 +75,14 @@ public class TestClass {
             return id;
         }
 
-        public List<String> getItems(){
+        public List<String> getItems() {
             return Collections.unmodifiableList(this.items);
         }
     }
 
     private class CartManager {
 
-        private List<Cart> carts = new ArrayList<>();
+        private final List<Cart> carts = new ArrayList<>();
 
         public Cart createCart() {
             var cart = new Cart(UUID.randomUUID().toString());

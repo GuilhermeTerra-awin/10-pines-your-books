@@ -1,4 +1,5 @@
-import java.time.LocalDate;
+package own;
+
 import java.time.YearMonth;
 
 
@@ -6,23 +7,22 @@ public class Cashier {
 
     private final IMerchantProcessor merchantProcessor;
 
-    public Cashier(IMerchantProcessor merchantProcessor){
+    public Cashier(IMerchantProcessor merchantProcessor) {
         this.merchantProcessor = merchantProcessor;
     }
-    
+
     public String checkout(Cart cart, Card card) {
 
-        asserCartIsNotEmpty(cart.isEmpty(), "Cart is empty");
+        asserCartIsNotEmpty(cart.isEmpty(), "own.Cart is empty");
         assertCardIsNotExpired(card);
 
- return        merchantProcessor.processPayment(cart.getTotal(), card);
+        return merchantProcessor.processPayment(cart.getTotal(), card);
 
     }
 
     private void assertCardIsNotExpired(Card card) {
-        if(card.isExpired(YearMonth.now()))
-        {
-            throw new RuntimeException("Card is expired");
+        if (card.isExpired(YearMonth.now())) {
+            throw new RuntimeException("own.Card is expired");
         }
     }
 

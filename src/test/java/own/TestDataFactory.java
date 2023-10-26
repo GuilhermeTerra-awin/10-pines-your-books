@@ -1,8 +1,7 @@
-import java.time.MonthDay;
+package own;
+
 import java.time.YearMonth;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class TestDataFactory {
@@ -32,14 +31,18 @@ public class TestDataFactory {
     }
 
     public static Card createValidCard() {
-        return new Card("22222222222222222", "name", YearMonth.of(2050, 10));
+        return new Card("1234567890123456", "name", YearMonth.of(2050, 10));
     }
 
     public static Card createExpiredCard() {
-        return new Card("1234567890123456", "name", YearMonth.of(2022, 10));
+        return new Card("22222222222222222", "name", YearMonth.of(2022, 10));
     }
 
     public static Card createStolenCard() {
         return new Card("1111111111111111", "test", YearMonth.of(2024, 11));
+    }
+
+    public static Card createUnbalancedCard() {
+        return new Card("3333333333333333", "test", YearMonth.of(2024, 11));
     }
 }

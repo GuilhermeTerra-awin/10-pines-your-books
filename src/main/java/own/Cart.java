@@ -1,3 +1,5 @@
+package own;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -7,15 +9,15 @@ public class Cart {
     public static final String PRODUCT_IS_NOT_SELL_BY_SUPERMARKET = "Product is not sell by supermarket";
     public static final String PRODUCT_QUANTITY_MUST_BE_STRICTLY_POSITIVE = "Product quantity must be strictly positive";
 
-    private Map<Object, Double> catalog;
-    private List<Object> products = new ArrayList<Object>();
+    private final Map<Object, Double> catalog;
+    private final List<Object> products = new ArrayList<Object>();
 
-    public Cart(Map<Object, Double> catalog){
+    public Cart(Map<Object, Double> catalog) {
         this.catalog = catalog;
     }
 
     public void add(Object aProduct) {
-        add(aProduct,1);
+        add(aProduct, 1);
     }
 
     public boolean isEmpty() {
@@ -30,11 +32,11 @@ public class Cart {
         assertQuantityIsStrictlyPositive(aQuantity);
         assertProductIsSellBySupermarket(aProduct);
 
-        for(int i=0;i<aQuantity;i++)
+        for (int i = 0; i < aQuantity; i++)
             products.add(aProduct);
     }
 
-    public Double getTotal(){
+    public Double getTotal() {
         return products.stream().map(p -> catalog.get(p)).reduce(0.0, Double::sum);
     }
 
@@ -54,10 +56,10 @@ public class Cart {
     }
 
     public void assertProductIsSellBySupermarket(Object aProduct) {
-        if(!catalog.keySet().contains(aProduct)) throw new RuntimeException(PRODUCT_IS_NOT_SELL_BY_SUPERMARKET);
+        if (!catalog.containsKey(aProduct)) throw new RuntimeException(PRODUCT_IS_NOT_SELL_BY_SUPERMARKET);
     }
 
     public void assertQuantityIsStrictlyPositive(int aQuantity) {
-        if (aQuantity<1) throw new RuntimeException(PRODUCT_QUANTITY_MUST_BE_STRICTLY_POSITIVE);
+        if (aQuantity < 1) throw new RuntimeException(PRODUCT_QUANTITY_MUST_BE_STRICTLY_POSITIVE);
     }
 }

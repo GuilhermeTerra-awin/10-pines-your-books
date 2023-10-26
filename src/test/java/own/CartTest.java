@@ -1,21 +1,18 @@
-import java.time.LocalDate;
-import java.time.MonthDay;
-import java.util.ArrayList;
-import java.util.List;
+package own;
 
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class CartTest{
+public class CartTest {
 
     @Test
-    public void cartsAreCreatedEmpty (){
+    public void cartsAreCreatedEmpty() {
         assertTrue(TestDataFactory.createCartWithCatalogWithProducts().isEmpty());
     }
 
     @Test
-    public void cartIsNotEmptyAfterAddingProducts (){
+    public void cartIsNotEmptyAfterAddingProducts() {
         Cart cart = TestDataFactory.createCartWithCatalogWithProducts();
 
         cart.add(TestDataFactory.productSellBySupermarket());
@@ -24,7 +21,7 @@ public class CartTest{
     }
 
     @Test
-    public void cartContainsAddedProduct(){
+    public void cartContainsAddedProduct() {
         Cart cart = TestDataFactory.createCartWithCatalogWithProducts();
 
         cart.add(TestDataFactory.productSellBySupermarket());
@@ -33,8 +30,8 @@ public class CartTest{
     }
 
     @Test
-    public void cartCanContainManyProducts(){
-        Cart cart =TestDataFactory. createCartWithCatalogWithProducts();
+    public void cartCanContainManyProducts() {
+        Cart cart = TestDataFactory.createCartWithCatalogWithProducts();
 
         cart.add(TestDataFactory.productSellBySupermarket());
         cart.add(TestDataFactory.otherProductSellBySupermarket());
@@ -51,7 +48,7 @@ public class CartTest{
             cart.add(TestDataFactory.productNotSellBySupermarket());
             fail(); //assertTrue(false)
         } catch (RuntimeException e) {
-            assertEquals(Cart.PRODUCT_IS_NOT_SELL_BY_SUPERMARKET,e.getMessage());
+            assertEquals(Cart.PRODUCT_IS_NOT_SELL_BY_SUPERMARKET, e.getMessage());
             assertTrue(cart.isEmpty());
         }
     }
@@ -61,44 +58,43 @@ public class CartTest{
         Cart cart = TestDataFactory.createCartWithCatalogWithProducts();
 
         try {
-            cart.add(TestDataFactory.productSellBySupermarket(),0);
+            cart.add(TestDataFactory.productSellBySupermarket(), 0);
             fail();
         } catch (RuntimeException e) {
-            assertEquals(Cart.PRODUCT_QUANTITY_MUST_BE_STRICTLY_POSITIVE,e.getMessage());
+            assertEquals(Cart.PRODUCT_QUANTITY_MUST_BE_STRICTLY_POSITIVE, e.getMessage());
             assertTrue(cart.isEmpty());
         }
     }
 
     @Test
     public void testCanAddManyProductsAtTheSameTime() {
-        Cart cart =TestDataFactory. createCartWithCatalogWithProducts();
+        Cart cart = TestDataFactory.createCartWithCatalogWithProducts();
 
-        cart.add(TestDataFactory.productSellBySupermarket(),2);
+        cart.add(TestDataFactory.productSellBySupermarket(), 2);
 
-        assertEquals(2,cart.numberOf(TestDataFactory.productSellBySupermarket()));
+        assertEquals(2, cart.numberOf(TestDataFactory.productSellBySupermarket()));
     }
 
     @Test
     public void testCanAddSameProductMoreThanOnce() {
         Cart cart = TestDataFactory.createCartWithCatalogWithProducts();
 
-        cart.add(TestDataFactory.productSellBySupermarket(),2);
-        cart.add(TestDataFactory.productSellBySupermarket(),3);
+        cart.add(TestDataFactory.productSellBySupermarket(), 2);
+        cart.add(TestDataFactory.productSellBySupermarket(), 3);
 
-        assertEquals(5,cart.numberOf(TestDataFactory.productSellBySupermarket()));
+        assertEquals(5, cart.numberOf(TestDataFactory.productSellBySupermarket()));
     }
 
     @Test
     public void testCanAddManyDifferentProductsAtTheSameTime() {
         Cart cart = TestDataFactory.createCartWithCatalogWithProducts();
 
-        cart.add(TestDataFactory.productSellBySupermarket(),2);
-        cart.add(TestDataFactory.otherProductSellBySupermarket(),3);
+        cart.add(TestDataFactory.productSellBySupermarket(), 2);
+        cart.add(TestDataFactory.otherProductSellBySupermarket(), 3);
 
-        assertEquals(2,cart.numberOf(TestDataFactory.productSellBySupermarket()));
-        assertEquals(3,cart.numberOf(TestDataFactory.otherProductSellBySupermarket()));
+        assertEquals(2, cart.numberOf(TestDataFactory.productSellBySupermarket()));
+        assertEquals(3, cart.numberOf(TestDataFactory.otherProductSellBySupermarket()));
     }
-
 
 
 }

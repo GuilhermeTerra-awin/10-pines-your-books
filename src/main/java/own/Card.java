@@ -1,5 +1,5 @@
-import java.time.LocalDate;
-import java.time.MonthDay;
+package own;
+
 import java.time.YearMonth;
 
 
@@ -16,7 +16,7 @@ public class Card {
     }
 
     public boolean isExpired(YearMonth currentYearMonth) {
-        return expiresAt.isBefore(currentYearMonth) ;
+        return expiresAt.isBefore(currentYearMonth);
     }
 
 
