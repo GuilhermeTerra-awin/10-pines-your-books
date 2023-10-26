@@ -16,7 +16,7 @@ public class TestFacade {
     void setUp() {
         supermarketTestObjects = new SupermarketTestObjects();
         AuthenticationService authenticationService = (userName, password) -> validUserName().equals(userName) && validPassword().equals(password);
-        facade = new Facade(authenticationService, supermarketTestObjects.catalogWithProducts());
+        facade = new Facade(authenticationService, supermarketTestObjects.catalogWithProducts(), supermarketTestObjects.merchantProcessor()
     }
 
     @Test
@@ -46,6 +46,13 @@ public class TestFacade {
     }
 
     @Test
+    public void TestListCartShouldReturnExceptionWhenCartNotExist() {
+        String cartId = "Id does not exist";
+        var ex = assertThrows(RuntimeException.class, () -> facade.listCart(cartId));
+        assertEquals("Cart does not exist", ex.getMessage());
+    }
+
+    @Test
     public void shouldAddProductToCart() {
         String cartId = facade.createCart(validUserName(), validPassword());
         facade.addProductToCart(cartId, supermarketTestObjects.productSellBySupermarket(), 1);
@@ -70,6 +77,11 @@ public class TestFacade {
         assertTrue(products.contains(supermarketTestObjects.productSellBySupermarket()));
         assertTrue(products.contains(supermarketTestObjects.otherProductSellBySupermarket()));
         assertEquals(4, products.size());
+    }
+
+    @Test
+    public void testCheckout(){
+        assertEquals("transactionId", facade.checkout("cartID","creditCardNumber","CreditCardExpiration", "name"));
     }
 
     private String validUserName() {
