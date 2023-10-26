@@ -1,6 +1,7 @@
 package hernan;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -15,6 +16,10 @@ public class Cart {
 
     public Cart(Map<Object, Double> catalog) {
         this.catalog = catalog;
+    }
+
+    public List<Object> getProducts() {
+        return Collections.unmodifiableList(products);
     }
 
     public void add(Object aProduct) {
