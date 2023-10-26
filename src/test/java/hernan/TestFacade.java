@@ -7,13 +7,14 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class TestFaced {
+public class TestFacade {
 
     private Facade facade;
-    private SupermarketTestObjects supermarketTestObjects = new SupermarketTestObjects();
+    private SupermarketTestObjects supermarketTestObjects;
 
     @BeforeEach
     void setUp() {
+        supermarketTestObjects = new SupermarketTestObjects();
         AuthenticationService authenticationService = (userName, password) -> validUserName().equals(userName) && validPassword().equals(password);
         facade = new Facade(authenticationService, supermarketTestObjects.catalogWithProducts());
     }
