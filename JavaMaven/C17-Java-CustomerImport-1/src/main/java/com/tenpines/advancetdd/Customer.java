@@ -5,6 +5,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.LineNumberReader;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 import org.hibernate.Session;
@@ -28,7 +29,7 @@ public class Customer {
 
 	@Id
 	@GeneratedValue
-	private long id; 
+	private long id;
 	@NotEmpty
 	private String firstName;
 	@NotEmpty
@@ -39,7 +40,7 @@ public class Customer {
 	private String identificationNumber;
 	@OneToMany(cascade = CascadeType.ALL)
 	private Set<Address> addresses;
-	
+
 	public Customer()
 	{
 		addresses = new HashSet<Address>();
@@ -89,63 +90,18 @@ public class Customer {
 		addresses.add(anAddress);
 	}
 
-	public static void importCustomers() throws IOException{
-		
-		FileReader reader = new FileReader("src/main/resources/input.txt");
-		LineNumberReader lineReader = new LineNumberReader(reader);
-		
-		File file = new File("src/main/resources/hibernate.cfg.xml");
-		
-		Configuration configuration = new Configuration();
-	    configuration.configure(file);
-	    configuration.addAnnotatedClass(Customer.class);
-	    configuration.addAnnotatedClass(Address.class);
 
-	    ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder().applySettings(configuration.getProperties()).build();        
-	    SessionFactory sessionFactory = configuration.buildSessionFactory(serviceRegistry);
-	    
-		Session session = sessionFactory.openSession();
-		session.beginTransaction();
-		
-		Customer newCustomer = null;
-		String line = lineReader.readLine(); 
-		while (line!=null) {
-			if (line.startsWith("C")){
-				String[] customerData = line.split(",");
-				newCustomer = new Customer();
-				newCustomer.setFirstName(customerData[1]);
-				newCustomer.setLastName(customerData[2]);
-				newCustomer.setIdentificationType(customerData[3]);
-				newCustomer.setIdentificationNumber(customerData[3]);
-				session.persist(newCustomer);
-			}
-			else if (line.startsWith("A")) {
-				String[] addressData = line.split(",");
-				Address newAddress = new Address();
-	
-				newCustomer.addAddress(newAddress);
-				newAddress.setStreetName(addressData[1]);
-				newAddress.setStreetNumber(Integer.parseInt(addressData[2]));
-				newAddress.setTown(addressData[3]);
-				newAddress.setZipCode(Integer.parseInt(addressData[4]));
-				newAddress.setProvince(addressData[3]);
-			}
-			
-			line = lineReader.readLine();
-		}
-			
-		session.getTransaction().commit();
-		session.close();
-		
-		reader.close();
-	}
-	
+
 	public static void main(String[] args){
-		try {
-			Customer.importCustomers();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+//		try {
+//			//Customer.importCustomers();
+//		} catch (IOException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+	}
+
+	public Set<Address> getAddresses() {
+		return addresses;
 	}
 }
