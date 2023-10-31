@@ -1,0 +1,115 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.tenpines.advancetdd</groupId>
+	<artifactId>C17-Java-CustomerImport-1</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.build.outputEncoding>UTF-8</project.build.outputEncoding>
+		<java.source.version>17</java.source.version>
+		<java.target.version>17</java.target.version>
+		<jakartaee-api.version>10.0.0</jakartaee-api.version>
+		<hibernate-core.version>6.3.1.Final</hibernate-core.version>
+		<hibernate-validator.version>8.0.1.Final</hibernate-validator.version>
+		<h2database.version>2.1.214</h2database.version>
+		<log4j2.version>2.17.1</log4j2.version>
+		<jackson.version>2.14.2</jackson.version>
+		<junit.version>5.9.2</junit.version>
+	</properties>
+	
+	<dependencies>
+		<!--
+		https://mvnrepository.com/artifact/jakarta.platform/jakarta.jakartaee-api -->
+		<dependency>
+			<groupId>jakarta.platform</groupId>
+			<artifactId>jakarta.jakartaee-api</artifactId>
+			<version>${jakartaee-api.version}</version>
+			<scope>provided</scope>
+		</dependency>
+		
+		<!-- https://mvnrepository.com/artifact/org.hibernate.orm/hibernate-core -->
+		<dependency>
+		    <groupId>org.hibernate.orm</groupId>
+		    <artifactId>hibernate-core</artifactId>
+		    <version>${hibernate-core.version}</version>
+		</dependency>
+		
+		<!-- https://mvnrepository.com/artifact/org.hibernate.validator/hibernate-validator -->
+		<dependency>
+		    <groupId>org.hibernate.validator</groupId>
+		    <artifactId>hibernate-validator</artifactId>
+		    <version>${hibernate-validator.version}</version>
+		</dependency>
+		
+		<!--
+		https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-core -->
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-core</artifactId>
+			<version>${jackson.version}</version>
+		</dependency>
+		
+		<!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind -->
+		<dependency>
+		    <groupId>com.fasterxml.jackson.core</groupId>
+		    <artifactId>jackson-databind</artifactId>
+		    <version>${jackson.version}</version>
+		</dependency>
+		
+		<!--
+		https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter-api -->
+		<dependency>
+			<groupId>org.junit.jupiter</groupId>
+			<artifactId>junit-jupiter-api</artifactId>
+			<version>${junit.version}</version>
+			<scope>test</scope>
+		</dependency>
+		
+		<!-- https://mvnrepository.com/artifact/com.h2database/h2 -->
+		<dependency>
+		    <groupId>com.h2database</groupId>
+		    <artifactId>h2</artifactId>
+		    <version>${h2database.version}</version>
+		</dependency>
+
+		<!--
+		https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter-engine -->
+		<dependency>
+			<groupId>org.junit.jupiter</groupId>
+			<artifactId>junit-jupiter-engine</artifactId>
+			<version>${junit.version}</version>
+			<scope>test</scope>
+		</dependency>
+
+		<!--
+		https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter-params -->
+		<dependency>
+			<groupId>org.junit.jupiter</groupId>
+			<artifactId>junit-jupiter-params</artifactId>
+			<version>${junit.version}</version>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+	
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-resources-plugin</artifactId>
+				<version>3.3.1</version>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.11.0</version>
+				<configuration>
+					<source>${java.source.version}</source>
+					<target>${java.target.version}</target>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+</project>
